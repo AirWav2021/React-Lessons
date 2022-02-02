@@ -1,8 +1,33 @@
-.message {
+.title {
   color: #61dafb;
-  padding: 50px;
+}
+
+.message-content {
+  span {
+    color: #61dafb;
+  }
 }
 
 .App-header {
   background-color: rgb(17, 128, 172);
+}
+
+form {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 20px;
+  width: 400px;
+}
+input {
+  border: 2px solid #dfdfdf;
+  border-radius: 40px;
+  height: 40px;
+  padding: 0 11px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  color: #1180ac;
+  outline: none;
 }

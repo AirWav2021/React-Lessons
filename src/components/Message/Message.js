@@ -1,5 +1,14 @@
+import React from 'react';
 import './scss/Message.scss';
 
-export function Message({ text }) {
-  return <h2 className="message" >{text}</h2>
+export class Message extends React.Component {
+  render() {
+    const { text, author } = this.props;
+    return (
+
+      <div>
+        <span>{author}: {text}</span>
+      </div>
+    )
+  }
 }
