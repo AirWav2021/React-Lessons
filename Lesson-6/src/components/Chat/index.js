@@ -1,13 +1,19 @@
-import { useState, useEffect, useRef } from 'react'
-import '../../App.css'
+import { useEffect, useRef } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { Navigate, useParams } from 'react-router'
 import { MessageList } from '../MessageList/index.js'
 import { Form } from '../Form/Form'
-import { Navigate, useParams } from 'react-router'
 import { AUTHORS } from '../../utils/constants'
+import { selectMessages } from '../../store/messages/selectors'
+import { addMessage } from '../../store/messages/actions'
+import '../../App.css'
 
-export function Chat({ messages, addMessage }) {
+export function Chat() {
 	const params = useParams()
 	const { chatId } = params
+
+	const messages = useSelector(selectMessages)
+	const dispatch = useDispatch()
 
 	const messagesEnd = useRef()
 
@@ -21,7 +27,7 @@ export function Chat({ messages, addMessage }) {
 			author,
 			id: `msg-${Date.now()}`,
 		}
-		addMessage(chatId, newMsg)
+		dispatch(addMessage(chatId, newMsg))
 	}
 
 	useEffect(() => {

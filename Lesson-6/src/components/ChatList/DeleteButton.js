@@ -1,12 +1,14 @@
-import { useCallback } from "react";
-import { Button } from "@mui/material";
+import { useCallback } from 'react'
+import { Button } from '@mui/material'
+import { useDispatch } from 'react-redux'
+import { deleteChat } from '../../store/chats/actions'
 
-const DeleteButton = ({ id, onClick }) => {
-    const handleClick = useCallback(() => {
-        onClick(id);
-    }, [onClick, id]);
+export const DeleteButton = ({ id }) => {
+	const dispatch = useDispatch()
 
-    return <Button onClick = { handleClick } > X </Button>
-};
+	const handleDeleteChat = () => {
+		dispatch(deleteChat(id))
+	}
 
-export default DeleteButton;
+	return <Button onClick={handleDeleteChat}>&times;</Button>
+}
