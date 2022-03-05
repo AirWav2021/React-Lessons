@@ -1,13 +1,10 @@
 import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom'
-// import { useSelector, useDispatch } from 'react-redux'
-// import { addChat, deleteChat } from '../../store/chats/actions.js'
 import { Chat } from '../Chat'
 import { ChatList } from '../ChatList'
 import Profile from '../Profile/index.js'
 import { HomePage } from '../../pages/HomePage.js'
 import { NotFoundPage } from '../../pages/NotFoundPage.js'
-// import { selectMessages } from '../../store/messages/selectors.js'
-// import { addMessage } from '../../store/messages/actions.js'
+import { Articles } from '../Arcticles/Arcticles'
 import './Router.scss'
 
 export const Router = () => {
@@ -33,31 +30,34 @@ export const Router = () => {
 		<BrowserRouter>
 			<div className='App_wrapper'>
 				<div className='Navigate'>
-					<NavLink to='/' className='link'>
-						Home
-					</NavLink>
-					<NavLink to='/chats' className='link'>
-						Chats
-					</NavLink>
-					<NavLink to='/profile' className='link'>
-						Profile
-					</NavLink>
+					<div>
+						<NavLink to='/' className='link'>
+							Home
+						</NavLink>
+					</div>
+					<div>
+						<NavLink to='/chats' className='link'>
+							Chats
+						</NavLink>
+					</div>
+					<div>
+						<NavLink to='/profile' className='link'>
+							Profile
+						</NavLink>
+					</div>
+					<div>
+						<NavLink to='/articles' className='link'>
+							Articles
+						</NavLink>
+					</div>
 				</div>
 				<Routes>
 					<Route path='' element={<HomePage />} />
-					<Route
-						path='chats'
-						element={
-							<ChatList
-							// onAddChat={handleAddChat}
-							// onDeleteChat={handleDeleteChat}
-							// chats={chatList}
-							/>
-						}
-					>
+					<Route path='/chats' element={<ChatList />}>
 						<Route path=':chatId' element={<Chat />} />
 					</Route>
-					<Route path='profile' element={<Profile />}></Route>
+					<Route path='/profile' element={<Profile />} />
+					<Route path='/articles' element={<Articles />} />
 					<Route path='*' element={<NotFoundPage />} />
 				</Routes>
 			</div>
