@@ -1,30 +1,37 @@
 import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom'
+import { onAuthStateChanged } from 'firebase/auth'
 import { Chat } from '../Chat'
 import { ChatList } from '../ChatList'
 import Profile from '../Profile/index.js'
-import { HomePage } from '../../pages/HomePage.js'
 import { NotFoundPage } from '../../pages/NotFoundPage.js'
 import { Articles } from '../Arcticles/Arcticles'
+import { PublicRoute } from '../PublicRoute'
+import { PrivateRoute } from '../PrivateRoute'
+import { useEffect, useState } from 'react'
+import { Home } from '../Home'
 import './Router.scss'
+import { auth } from '../../service/firebase'
 
 export const Router = () => {
-	// const messages = useSelector(selectMessages)
+	const [authed, setAuthed] = useState(false)
+	const authorize = () => {
+		setAuthed(true)
+	}
+	const unauthorize = () => {
+		setAuthed(false)
+	}
 
-	// const chatList = useSelector(state => state.chats)
-	// const dispatch = useDispatch()
-
-	// const handleAddMessage = (chatId, newMessage) => {
-	// 	dispatch(addMessage(chatId, newMessage))
-	// }
-
-	// const handleAddChat = newChatName => {
-	// 	const newId = `chat-${Date.now()}`
-	// 	dispatch(addChat(newId, newChatName))
-	// }
-
-	// const handleDeleteChat = idToDelete => {
-	// 	dispatch(deleteChat(idToDelete))
-	// }
+	useEffect(() => {
+		const unsubscribe = onAuthStateChanged(auth, user => {
+			if (user) {
+				setAuthed(true)
+				console.log('ВХОД')
+			} else {
+				setAuthed(false)
+			}
+		})
+		return unsubscribe
+	}, [])
 
 	return (
 		<BrowserRouter>
@@ -52,11 +59,16 @@ export const Router = () => {
 					</div>
 				</div>
 				<Routes>
-					<Route path='' element={<HomePage />} />
+					<Route path='/' element={<PublicRoute authed={authed} />}>
+						<Route path='' element={<Home />} />
+						<Route path='/signup' element={<Home isSignUp />} />
+					</Route>
 					<Route path='/chats' element={<ChatList />}>
 						<Route path=':chatId' element={<Chat />} />
 					</Route>
-					<Route path='/profile' element={<Profile />} />
+					<Route path='/profile' element={<PrivateRoute authed={authed} />}>
+						<Route path='' element={<Profile onLogout={unauthorize} />} />
+					</Route>
 					<Route path='/articles' element={<Articles />} />
 					<Route path='*' element={<NotFoundPage />} />
 				</Routes>
