@@ -4,12 +4,13 @@ import './scss/Message.scss'
 import { Context } from '../../utils/Context'
 
 export const Message = ({ text, author }) => {
-	const { messageColor } = useContext(Context)
-	console.log('globalContext', messageColor)
+	// const { messageColor } = useContext(Context)
+	// console.log('globalContext', messageColor)
 
 	return (
 		<div>
-			<span style={{ color: messageColor }}>
+			{/* <span style={{ color: messageColor }}> */}
+			<span>
 				{author}: {text}
 			</span>
 		</div>
